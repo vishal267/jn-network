@@ -2,7 +2,7 @@ module "vpc" {
   source  = "registry.terraform.io/terraform-aws-modules/vpc/aws"
   version = "3.19.0"
 
-  name = local.cluster_name
+  name = var.cluster_name
   cidr = "172.25.126.0/23"
 
 
@@ -22,16 +22,18 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
+/*
   # https://aws.amazon.com/premiumsupport/knowledge-center/eks-vpc-subnet-discovery/
   private_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}"  = "owned"
-    "karpenter.sh/discovery/${local.cluster_name}" = local.cluster_name
+    "kubernetes.io/cluster/${var.cluster_name}"  = "owned"
+    "karpenter.sh/discovery/${var.cluster_name}" = var.cluster_name
     "kubernetes.io/role/internal-elb"              = "1"
   }
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                      = "1"
   }
+  */
 
 }
